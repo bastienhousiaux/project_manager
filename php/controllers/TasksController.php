@@ -1,42 +1,61 @@
 <?php
+include_once("dao/ClientQueryBuilder.php");
+function testId(){
+    echo "trigerred id";
+}
 
-include_once("../dao/TasksDAO.php");
+function testAll(){
+    echo "trigerred all";
+}
+/**
+* CREATE
+*/
 
-if(isset($_POST["request_type"])){
-    switch($_POST["request_type"]){
-        case "createTask":
-            echo json_encode(createTask($_POST["name"],$_POST["description"]));
-            break;
-        case "updateTaskName":
-            echo json_encode(updateTaskNameById($_POST["id"],$_POST["newName"]));
-            break;
-        case "updateTaskDescription":
-            echo json_encode(updateTaskDescriptionById($_POST["id"],$_POST["newDescription"]));
-            break;
-        case "deleteTask":
-            echo json_encode(deleteTaskById($_POST["id"]));
-            break;
-        case "addTag":
-            echo json_encode(addTagToTask($_POST["task_id"],$_POST["tag_id"]));
-            break;
-        default:
-            echo "wrong request type " . $_POST["request_type"];
-    }
-}else{
-    if(isset($_GET["request_type"])){
-        switch($_GET["request_type"]){
-            case "getTask":
-                echo json_encode(getTaskById($_GET["id"]));
-                break;
-            case "getTasks":
-                echo json_encode(getAllTasks());
-                break;
-            case "getTags":
-                echo json_encode(getAllTagsOfTask($_GET["id"]));
-                break;
-            default:
-                echo "wrong request type " . $_GET["request_type"];
-        }
-    }
+function createTask($name,$description){
+    echo insert("tasks",["task_name"=>$name,"task_description"=>$description]);
+}
+
+/**
+* READ
+*/
+
+function getTaskById($id){
+    global $bdd;
+    echo(selectOne("tasks",["task_id","task_name","task_description"],"task_id=$id"));
+}
+
+function getAllTasks(){
+    echo(select("tasks",["task_id","task_name","task_description"]));
+}
+
+
+/**
+* UPDATE
+*/
+
+function updateTask($id,$data){
+    echo update("tasks",$data,"task_id=$id",["task_name","task_description"]);
+}
+
+/**
+* DELETE
+*/
+
+function deleteTaskById($id){
+    echo delete("tasks","task_id=$id");
+}
+
+
+
+function addTagToTask($task_id,$tag_id){
+    echo insert("tasks_tags",["task_id"=>$task_id,"tag_id"=>$tag_id]);
+}
+
+function getAllTagsOfTask($task_id){
+    echo selectJoin("tags","tags.tag_id,tags.tag_name,tags.tag_description",
+    [
+        ["tasks_tags","tags.tag_id","tasks_tags.tag_id"],
+        ["tasks","tasks.task_id","tasks_tags.task_id"]
+    ]);
 }
 ?>

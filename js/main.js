@@ -40,21 +40,24 @@
 //     }
 //     );
 // }
-var vue;
-window.onload=function(){
-    vue=new Vue({
+var vue=new Vue({
         el:"#main-container",
         data:{
             message:"hello world",
             tasks:[]
+        },
+        methods:{
+            setTasks:function(tasks){
+                this.tasks=tasks;
+            }
         }
-    })
+    });
 
-    utils.get("php/controllers/TasksController.php?request_type=getTasks",
+    utils.get("php/api.php/tasks",
     function(data){
-        vue.data.tasks=data;
+        console.log(data);
+        vue.setTasks(data);
     },
     function(data){
         console.log(data);
-    })
-}
+    });
