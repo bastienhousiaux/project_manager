@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/utils.js"></script>
+    
+</head>
+<body>
+
+    <!--<div class="tasks_container">
+
+    </div>
+    
+
+    <div id="task_edit">
+        <input type="text" name="task_name" id="task_name">
+        <input type="text" name="task_description" id="task_description">
+        <button id="task_edit_submit">ok</button>
+    </div>-->
+
+    <div id="main-container">
+
+        {{ message }}
+        <div id="task-container">
+            <div v-for="task in tasks">
+                <h2>{{task.task_name}}</h2>
+                <p>{{task.task_description}}</p>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
