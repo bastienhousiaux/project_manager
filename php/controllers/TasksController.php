@@ -1,12 +1,6 @@
 <?php
 include_once("dao/ClientQueryBuilder.php");
-function testId(){
-    echo "trigerred id";
-}
 
-function testAll(){
-    echo "trigerred all";
-}
 /**
 * CREATE
 */
@@ -33,7 +27,7 @@ function getAllTasks(){
 * UPDATE
 */
 
-function updateTask($id,$data){
+function updateTaskById($id,$data){
     echo update("tasks",$data,"task_id=$id",["task_name","task_description"]);
 }
 

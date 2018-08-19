@@ -27,9 +27,10 @@
 
         {{ message }}
         <div id="task-container">
-            <div v-for="task in tasks">
+            <div v-for="task in tasks" :data-id="task.task_id">
                 <h2>{{task.task_name}}</h2>
                 <p>{{task.task_description}}</p>
+                <button v-on:click="deleteTask($event,task.task_id)">supprimer</button>
             </div>
         </div>
     </div>

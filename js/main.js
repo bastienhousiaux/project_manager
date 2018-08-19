@@ -49,14 +49,26 @@ var vue=new Vue({
         methods:{
             setTasks:function(tasks){
                 this.tasks=tasks;
+            },
+            deleteTask:function(event,taskId){
+                console.log("deleting");
+                this.tasks.splice(this.tasks.findIndex(function(value){
+                    return value.id===taskId;
+                }),1);
+                utils.post("php/api.php/tasks/"+taskId+"/delete",{},()=>{
+                    console.log("ok");
+                },(d)=>{
+                    console.log(d);
+                });
             }
         }
     });
 
     utils.get("php/api.php/tasks",
     function(data){
-        console.log(data);
+        // console.log(data);
         vue.setTasks(data);
+        console.log(vue.tasks);
     },
     function(data){
         console.log(data);

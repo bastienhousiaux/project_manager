@@ -1,5 +1,4 @@
 <?php
-    // namespace ClientQueryBuilder;
 
     $bdd = new PDO('mysql:host=localhost;dbname=project_manager_app;charset=utf8', 'root', '');
 
